@@ -1,9 +1,10 @@
 #include <gtest/gtest.h>
+#include <libproj/directory.hpp>
+#include <libproj/defer.hpp>
 #include <windows.h>
 #include <string>
 #include <stdexcept>
-#include <libproj/directory.hpp>
-#include <libproj/defer.hpp>
+#include <utility>
 
 /***
  * @brief get the system temp directory path.
@@ -107,7 +108,7 @@ TEST(DeleteDirectoryTests, existing_one){
   WCHAR lpTempPathBuffer[MAX_PATH+10];
   DWORD size=get_temp_dir(lpTempPathBuffer);
   lpTempPathBuffer[size]=L'\\';
-  lpTempPathBuffer[size+1]=L'f';
+  lpTempPathBuffer[size+1]=L'q';
   lpTempPathBuffer[size+2]=0;
   try{
     create_directory(lpTempPathBuffer);
@@ -130,13 +131,18 @@ TEST(DeleteDirectoryTests, recursive){
   WCHAR lpTempPathBuffer[MAX_PATH+10];
   DWORD size=get_temp_dir(lpTempPathBuffer);
   lpTempPathBuffer[size]=L'\\';
-  lpTempPathBuffer[size+1]=L'f';
+  lpTempPathBuffer[size+1]=L'j';
   lpTempPathBuffer[size+2]=0;
+  try{
   create_directory(lpTempPathBuffer);
+  } catch(AlreadyExistsError& e){}
   lpTempPathBuffer[size+2]=L'\\';
   lpTempPathBuffer[size+3]=L'f';
   lpTempPathBuffer[size+4]=0;
+  try{
   create_directory(lpTempPathBuffer);
+  } catch(AlreadyExistsError& e){}
   lpTempPathBuffer[size+2]=0;
   EXPECT_THROW(delete_directory(lpTempPathBuffer), std::runtime_error);
+  // TODO clear - delete dir
 }

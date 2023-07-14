@@ -1,6 +1,8 @@
 #include <libproj/directory.hpp>
-#include <stdexcept>
 #include <windows.h>
+#include <stdexcept>
+#include <string>
+#include <utility>
 
 auto is_directory_exists(wchar_t *path) -> bool {
   DWORD ftyp = GetFileAttributesW(path);

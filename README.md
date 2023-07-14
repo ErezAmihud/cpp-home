@@ -15,5 +15,5 @@ To run ctest with check for memory leaks use:
 `ctest --overwrite MemoryCheckCommandOptions="--leak-check=full --error-exitcode=100" -T memcheck`
 
 
-NOTE there was a thought about using SHFileOperation for recursive deletion, but it is not a "pure" win32api function as it is a "shell api"
+NOTE there was a thought about using SHFileOperation for recursive deletion, but it is not a "pure" win32api function as it requires linking with another library.
 NOTE that for some reason, in mingw gtest compiles only with posix mingw, not the win32 one. The flag gtest_disable_pthreads=ON should fix it, but for me it did not
