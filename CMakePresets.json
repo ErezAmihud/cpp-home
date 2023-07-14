@@ -1,0 +1,51 @@
+{
+    "version": 4,
+    "include": [
+        "cmake/basicPresets.json"
+    ],
+ 
+    "configurePresets": [
+        {
+            "name": "mingw-debug",
+            "displayName": "mingw-debug",
+            "inherites": ["debug"],
+            "description": "Using compilers: gcc, g++",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "1",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "gcc.exe",
+                "CMAKE_CXX_COMPILER": "g++.exe"
+            }
+        },
+        {
+            "name": "clang",
+            "displayName": "clang",
+            "inherits": ["debug"],
+            "description": "Using compilers: clang, clang++",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "1",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "clang.exe",
+                "CMAKE_CXX_COMPILER": "clang++.exe"
+            }
+        },
+        {
+            "name": "clang-cl",
+            "displayName": "clang cl",
+            "description": "clang-cl",
+            "generator": "Ninja",
+            "inherits": ["debug"],
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "clang-cl.exe",
+                "CMAKE_CXX_COMPILER": "clang-cl.exe",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ]
+}

@@ -1,0 +1,3 @@
+[submodule "clang-cmake"]
+	path = clang-cmake
+	url = git@github.com:ErezAmihud/clang-cmake.git
