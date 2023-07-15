@@ -12,3 +12,7 @@ FailStack::~FailStack() {
     stack[stack.size() - 1 - i]->clear();
   }
 }
+
+void FailStack::cancel(){
+  stack.clear();
+}

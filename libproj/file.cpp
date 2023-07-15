@@ -4,7 +4,7 @@
 
 // TODO use /? to not constrain to MAX_PATH
 // TODO symbolic link behavior is - to override the target of the link
-auto copy_file (std::wstring& src, std::wstring& dest) -> void{
+auto copy_file (const std::wstring& src, const std::wstring& dest) -> void{
   BOOL res = CopyFileW(src.c_str(), dest.c_str(),true);
   if (0==res)
     throw std::runtime_error("Copy file failed " + std::to_string(GetLastError()));

@@ -21,6 +21,16 @@ TEST(DeferStack,one_item){
   }
   ASSERT_TRUE(flag);
 }
+TEST(DeferStack,cancel){
+  bool flag = false;
+  {
+    FailStack stack;
+    auto b = std::make_unique<BoolClearable>(&flag);
+    stack.add(std::move(b));
+    stack.cancel();
+  }
+  ASSERT_FALSE(flag);
+}
 class MultiClear: public Clearable{
   public:
     MultiClear(std::vector<int> &b, int num):arr(b),num(num),Clearable(){}
@@ -32,7 +42,7 @@ class MultiClear: public Clearable{
   int num;
     };
 
-// tests that the stack cleans from the end to the first added clear
+// tests the order of the cleanup
 TEST(DeferStack,two_items){
   std::vector<int> items;
   {
