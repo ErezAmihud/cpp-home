@@ -39,18 +39,24 @@ auto install(std::vector<std::wstring> paths,
   size_t pos = destination_directory.find(L'\\',3); // search for path seperator without the first part of `drive`
   while(std::wstring::npos != pos){
     try {
-      std::wstring path(destination_directory, pos);
+      std::wstring path = destination_directory.substr(0, pos);
       create_directory(path);
       fail_stack.add(std::make_unique<DirectoryCleaner>(std::move(path)));
     } catch (AlreadyExistsError &e) {
     }
-    pos = destination_directory.find(L'\\', pos);
+    pos = destination_directory.find(L'\\', pos+1);
+  }
+  try {
+    create_directory(destination_directory);
+    fail_stack.add(std::make_unique<DirectoryCleaner>(destination_directory));
+  } catch (AlreadyExistsError &e) {
   }
   int a = 0;
   for (const auto &path : paths) {
     a++;
-    std::wstring b(destination_directory + std::to_wstring(a));
+    std::wstring b(destination_directory+L"\\" + std::to_wstring(a));
     copy_file(path, b);
     fail_stack.add(std::make_unique<DirectoryCleaner>(destination_directory));
   }
+  fail_stack.cancel();
 }
