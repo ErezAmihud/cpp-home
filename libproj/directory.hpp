@@ -17,7 +17,8 @@ class PathNotFoundError : public std::exception{
  * @brief: check if a directory exists
  * @param path: null terminated string specifying the path
  */
-auto is_directory_exists(wchar_t *path) -> bool;
+auto is_directory(std::wstring& path)->bool;
+auto is_directory(const wchar_t *path) -> bool;
 
 /**
  * @brief: create a directory

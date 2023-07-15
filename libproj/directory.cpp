@@ -4,7 +4,10 @@
 #include <string>
 #include <utility>
 
-auto is_directory_exists(wchar_t *path) -> bool {
+auto is_directory(std::wstring& path) -> bool {
+  return is_directory(path.c_str());
+}
+auto is_directory(const wchar_t *path) -> bool {
   DWORD ftyp = GetFileAttributesW(path);
   if (ftyp == INVALID_FILE_ATTRIBUTES)
     return false;

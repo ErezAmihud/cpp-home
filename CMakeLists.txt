@@ -10,7 +10,7 @@ list(APPEND IWYU_IMP ${PROJECT_SOURCE_DIR}/gtest.imp)
 
 # standards
 # GoogleTest requires at least C++14
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # includes
