@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <libproj/defer.hpp>
 #include <libproj/directory.hpp>
+#include <libproj/temp_path.hpp>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -13,15 +14,6 @@
  *
  * @NOTE this assumes that the temp path exists
  */
-auto get_temp_dir() -> std::wstring {
-  wchar_t path [MAX_PATH+1];
-
-  DWORD path_size = GetTempPathW(MAX_PATH+1, path);
-  if (0 == path_size)
-    throw std::runtime_error(std::string("Get temp path size failed with ") +
-                             std::to_string(GetLastError()));
-  return std::wstring(path);
-}
 
 auto path_exists(wchar_t *path) -> bool {
   DWORD ftyp = GetFileAttributesW(path);
