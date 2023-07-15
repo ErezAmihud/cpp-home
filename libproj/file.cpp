@@ -4,22 +4,23 @@
 
 // TODO use /? to not constrain to MAX_PATH
 // TODO symbolic link behavior is - to override the target of the link
-auto copy_file (const std::wstring& src, const std::wstring& dest) -> void{
-  BOOL res = CopyFileW(src.c_str(), dest.c_str(),true);
-  if (0==res)
-    throw std::runtime_error("Copy file failed " + std::to_string(GetLastError()));
-
+auto copy_file(const std::wstring &src, const std::wstring &dest) -> void {
+  BOOL res = CopyFileW(src.c_str(), dest.c_str(), TRUE);
+  if (0 == res)
+    throw std::runtime_error("Copy file failed " +
+                             std::to_string(GetLastError()));
 }
 
 // TODO use /? to not constrain to MAX_PATH
-auto delete_file(std::wstring& file_name)->void{
+auto delete_file(const std::wstring &file_name) -> void {
   BOOL res = DeleteFileW(file_name.c_str());
-  if (0==res)
-    throw std::runtime_error("Could not delete file " + std::to_string(GetLastError()));
+  if (0 == res)
+    throw std::runtime_error("Could not delete file " +
+                             std::to_string(GetLastError()));
 }
 
 // TODO use /? for MAX_PATH
-auto is_file(std::wstring& file_name)->bool{
+auto is_file(const std::wstring &file_name) -> bool {
   DWORD ftyp = GetFileAttributesW(file_name.c_str());
   if (ftyp == INVALID_FILE_ATTRIBUTES)
     return false;
@@ -27,5 +28,3 @@ auto is_file(std::wstring& file_name)->bool{
     return true;
   return false;
 }
-
-

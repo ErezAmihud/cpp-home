@@ -38,7 +38,7 @@ class DirectoryFile : public ::testing::Test {
 protected:
   void SetUp() override {
     auto temp_dir = get_temp_dir();
-    temp_dir+=L"a";
+    temp_dir += L"a";
     HANDLE file = CreateFileW(lpTempPathBuffer, GENERIC_READ | GENERIC_WRITE,
                               FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
                               CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -64,7 +64,7 @@ TEST_F(DirectoryFile, NotADiretroy) {
 
 TEST(CreateDirectoryTests, InGoodPath) {
   auto temp_dir = get_temp_dir();
-  temp_dir+=L"d";
+  temp_dir += L"d";
   ASSERT_FALSE(is_directory(temp_dir));
   create_directory(temp_dir);
   // TODO prepend `\\?\`
@@ -117,7 +117,7 @@ TEST(DeleteDirectoryTests, recursive) {
     create_directory(temp_dir);
   } catch (AlreadyExistsError &e) {
   }
-  temp_dir.resize(temp_dir.size()-2);
+  temp_dir.resize(temp_dir.size() - 2);
   EXPECT_THROW(delete_directory(temp_dir), std::runtime_error);
   // TODO clear - delete dir
 }
