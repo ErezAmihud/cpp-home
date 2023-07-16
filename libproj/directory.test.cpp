@@ -68,9 +68,8 @@ TEST(CreateDirectoryTests, InGoodPath) {
   ASSERT_FALSE(is_directory(temp_dir));
   create_directory(temp_dir);
   // TODO prepend `\\?\`
-  auto _defered_delete =
-      defer_func([temp_dir]() { RemoveDirectoryW(temp_dir.c_str()); });
   ASSERT_TRUE(is_directory(temp_dir));
+  delete_directory(temp_dir);
 }
 
 TEST(CreateDirectoryTests, Exists) {
