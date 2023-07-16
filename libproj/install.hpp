@@ -1,4 +1,4 @@
 #include <string>
 #include <vector>
-auto install(std::vector<std::wstring> paths,
-             std::wstring destination_directory) -> void;
+auto install(const std::vector<std::wstring>& paths,
+             const std::wstring& destination_directory) -> void;

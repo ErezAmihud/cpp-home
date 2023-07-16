@@ -1,4 +1,3 @@
-#include <iostream>
 #include <libproj/defer.hpp>
 #include <memory>
 #include <string>
@@ -9,9 +8,7 @@ void FailStack::add(std::unique_ptr<Clearable> clearable) {
 }
 
 FailStack::~FailStack() {
-  std::cout << "clean" << std::endl;
   for (size_t i = 0; i < stack_.size(); i++) {
-  std::cout << "something" << std::endl;
     stack_[stack_.size() - 1 - i]->clear();
   }
 }
