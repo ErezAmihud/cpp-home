@@ -2,6 +2,7 @@
 #include <libproj/directory.hpp>
 #include <libproj/file.hpp>
 #include <libproj/install.hpp>
+#include <libproj/exceptions.hpp>
 #include <memory>
 #include <utility>
 
@@ -33,6 +34,10 @@ private:
   const std::wstring file_name;
 };
 
+auto get_file_name(const std::wstring& path) -> std::wstring{
+  return path.substr(path.rfind(L'\\')+1, path.size());
+}
+
 auto install(const std::vector<std::wstring>& paths,
              const std::wstring& destination_directory) -> void {
   FailStack fail_stack;
@@ -52,12 +57,13 @@ auto install(const std::vector<std::wstring>& paths,
     fail_stack.add(std::make_unique<DirectoryCleaner>(destination_directory));
   } catch (AlreadyExistsError &e) {
   }
-  int a = 0;
+
   for (const auto &path : paths) {
-    a++;
-    std::wstring b(destination_directory+L"\\" + std::to_wstring(a));
-    copy_file(path, b);
-    fail_stack.add(std::make_unique<FileCleaner>(b));
+    std::wstring destination = destination_directory;
+    auto file_name = get_file_name(path);
+    destination.append(L"\\").append(file_name);
+    copy_file(path, destination);
+    fail_stack.add(std::make_unique<FileCleaner>(destination));
   }
   fail_stack.cancel();
   } catch(...){} // NOTE this catch block exists here because when an exception is not caught then not all destructors are called.

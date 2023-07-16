@@ -24,7 +24,7 @@
             "displayName": "clang cl",
             "description": "clang-cl",
             "generator": "Ninja",
-            "inherits": ["release"],
+            "inherits": ["debug"],
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "1",

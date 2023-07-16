@@ -1,17 +1,20 @@
 #include <libproj/file.hpp>
 #include <stdexcept>
 #include <windows.h>
+#include <libproj/exceptions.hpp>
 
-// TODO use /? to not constrain to MAX_PATH
-// TODO symbolic link behavior is - to override the target of the link
 auto copy_file(const std::wstring &src, const std::wstring &dest) -> void {
   BOOL res = CopyFileW(src.c_str(), dest.c_str(), TRUE);
-  if (0 == res)
+  if (0 == res){
+    DWORD last_error = GetLastError();
+    if (last_error == ERROR_ALREADY_EXISTS)
+      throw AlreadyExistsError();
+
     throw std::runtime_error("Copy file failed " +
                              std::to_string(GetLastError()));
+  }
 }
 
-// TODO use /? to not constrain to MAX_PATH
 auto delete_file(const std::wstring &file_name) -> void {
   BOOL res = DeleteFileW(file_name.c_str());
   if (0 == res)
@@ -19,7 +22,6 @@ auto delete_file(const std::wstring &file_name) -> void {
                              std::to_string(GetLastError()));
 }
 
-// TODO use /? for MAX_PATH
 auto is_file(const std::wstring &file_name) -> bool {
   DWORD ftyp = GetFileAttributesW(file_name.c_str());
   if (ftyp == INVALID_FILE_ATTRIBUTES)
@@ -28,3 +30,4 @@ auto is_file(const std::wstring &file_name) -> bool {
     return true;
   return false;
 }
+

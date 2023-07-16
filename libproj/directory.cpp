@@ -3,6 +3,7 @@
 #include <string>
 #include <utility>
 #include <windows.h>
+#include <libproj/exceptions.hpp>
 
 auto is_directory(const std::wstring &path) -> bool {
   DWORD ftyp = GetFileAttributesW(path.c_str());
@@ -10,14 +11,13 @@ auto is_directory(const std::wstring &path) -> bool {
     return false;
 
   if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
-    return true; // this is a directory!
+    return true;
 
-  return false; // this is not a directory!
+  return false;
 }
 
-auto create_directory(const wchar_t *path) -> void {
-  // TODO add support for more then MAX_PATH with `\?`
-  if (0 != CreateDirectoryW(path, nullptr)) {
+auto create_directory(const std::wstring &path) -> void {
+  if (0 != CreateDirectoryW(path.c_str(), nullptr)) {
     return;
   }
   DWORD error = GetLastError();
@@ -29,23 +29,14 @@ auto create_directory(const wchar_t *path) -> void {
   }
   throw std::runtime_error(std::string("Directory creation error ") +
                              std::to_string(error));
-    // shold be unreachable
+    // should be unreachable
 
 }
 
-auto create_directory(const std::wstring &path) -> void {
-  return create_directory(path.c_str());
-}
-
-// TODO allow infinate paths with `\\?`
-// TODO maybe make a switch case for some last error errors?
-auto delete_directory(const wchar_t *path) -> void {
-  BOOL res = RemoveDirectoryW(path);
+auto delete_directory(const std::wstring &path) -> void {
+  BOOL res = RemoveDirectoryW(path.c_str());
   if (0 != res) {
     return;
   }
   throw std::runtime_error(std::to_string(GetLastError()));
-}
-auto delete_directory(const std::wstring &path) -> void {
-  delete_directory(path.c_str());
 }

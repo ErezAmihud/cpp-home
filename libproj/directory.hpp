@@ -1,15 +1,5 @@
-#include <exception>
-#include <stdexcept>
 #include <string>
 
-class AlreadyExistsError : public std::exception {
-public:
-  AlreadyExistsError() = default;
-};
-class PathNotFoundError : public std::exception {
-public:
-  PathNotFoundError() = default;
-};
 
 /***
  * @brief: check if a directory exists

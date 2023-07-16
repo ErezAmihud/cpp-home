@@ -2,6 +2,8 @@
 #include <libproj/defer.hpp>
 #include <libproj/directory.hpp>
 #include <libproj/temp_path.hpp>
+#include <libproj/file.hpp>
+#include <libproj/exceptions.hpp>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -14,12 +16,9 @@
  *
  * @NOTE this assumes that the temp path exists
  */
-
 auto path_exists(wchar_t *path) -> bool {
   DWORD ftyp = GetFileAttributesW(path);
-  if (ftyp == INVALID_FILE_ATTRIBUTES)
-    return false;
-  return true; // this is not a directory!
+  return ftyp != INVALID_FILE_ATTRIBUTES;
 }
 
 TEST(DirectoryExistsTest, Exists) {
@@ -30,36 +29,24 @@ TEST(DirectoryExistsTest, Exists) {
 TEST(DirectoryExistsTest, DoesNotExists) {
   auto temp_dir = get_temp_dir();
   temp_dir += L"nonexistant";
-  // Stop the string sooner then the directory to check on non existant
   ASSERT_FALSE(is_directory(temp_dir));
 }
 
 class DirectoryFile : public ::testing::Test {
 protected:
   void SetUp() override {
-    auto temp_dir = get_temp_dir();
-    temp_dir += L"a";
-    HANDLE file = CreateFileW(lpTempPathBuffer, GENERIC_READ | GENERIC_WRITE,
-                              FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
-                              CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-    // TODO handle raii
-    // TODO raise
-    CloseHandle(file);
+    temp_path = get_temp_file();
   }
 
   void TearDown() override {
-    // TODO can disable path limitation with `\\?\` at the start of the
-    // function.
-    DeleteFileW(
-        lpTempPathBuffer); // TODO proper delete file with error handling
+    delete_file(temp_path);
   }
 
-  WCHAR lpTempPathBuffer[MAX_PATH];
+  std::wstring temp_path;
 };
 
 TEST_F(DirectoryFile, NotADiretroy) {
-  // Stop the string sooner then the directory to check on non existant
-  ASSERT_FALSE(is_directory(lpTempPathBuffer));
+  ASSERT_FALSE(is_directory(temp_path));
 }
 
 TEST(CreateDirectoryTests, InGoodPath) {
@@ -67,7 +54,6 @@ TEST(CreateDirectoryTests, InGoodPath) {
   temp_dir += L"d";
   ASSERT_FALSE(is_directory(temp_dir));
   create_directory(temp_dir);
-  // TODO prepend `\\?\`
   ASSERT_TRUE(is_directory(temp_dir));
   delete_directory(temp_dir);
 }
@@ -86,7 +72,7 @@ TEST(CreateDirectoryTests, MultipleInner) {
   EXPECT_THROW(create_directory(temp_dir), PathNotFoundError);
 }
 
-TEST(DeleteDirectoryTests, existing_one) {
+TEST(DeleteDirectoryTests, ExistingOne) {
   auto temp_dir = get_temp_dir();
   temp_dir += L"q";
   try {
@@ -118,5 +104,4 @@ TEST(DeleteDirectoryTests, recursive) {
   }
   temp_dir.resize(temp_dir.size() - 2);
   EXPECT_THROW(delete_directory(temp_dir), std::runtime_error);
-  // TODO clear - delete dir
 }

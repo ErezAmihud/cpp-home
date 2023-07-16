@@ -18,7 +18,6 @@
   ASSERT_TRUE(is_file(a));
   a = temp_path + L"2";
   ASSERT_TRUE(is_file(a));
-  std::cout << "file 3" << std::endl;
 }*/
 /*
 TEST(BTest, c) {
