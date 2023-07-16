@@ -1,17 +1,16 @@
+#include <windows.h>
+
 #include <libproj/directory.hpp>
+#include <libproj/exceptions.hpp>
 #include <stdexcept>
 #include <string>
 #include <utility>
-#include <windows.h>
-#include <libproj/exceptions.hpp>
 
 auto is_directory(const std::wstring &path) -> bool {
   DWORD ftyp = GetFileAttributesW(path.c_str());
-  if (ftyp == INVALID_FILE_ATTRIBUTES)
-    return false;
+  if (ftyp == INVALID_FILE_ATTRIBUTES) return false;
 
-  if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
-    return true;
+  if (ftyp & FILE_ATTRIBUTE_DIRECTORY) return true;
 
   return false;
 }
@@ -28,9 +27,8 @@ auto create_directory(const std::wstring &path) -> void {
     throw PathNotFoundError();
   }
   throw std::runtime_error(std::string("Directory creation error ") +
-                             std::to_string(error));
-    // should be unreachable
-
+                           std::to_string(error));
+  // should be unreachable
 }
 
 auto delete_directory(const std::wstring &path) -> void {

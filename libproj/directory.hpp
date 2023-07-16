@@ -1,6 +1,5 @@
 #include <string>
 
-
 /***
  * @brief: check if a directory exists
  * @param path: null terminated string specifying the path

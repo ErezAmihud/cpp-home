@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <libproj/defer.hpp>
 #include <libproj/directory.hpp>
 #include <libproj/file.hpp>
@@ -6,7 +7,7 @@
 #include <stdexcept>
 
 class TempFile : public ::testing::Test {
-protected:
+ protected:
   void SetUp() override { temp_file = get_temp_file(); }
 
   void TearDown() override { delete_file(temp_file); }

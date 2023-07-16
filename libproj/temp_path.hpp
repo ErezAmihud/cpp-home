@@ -1,7 +1,8 @@
 #include <string>
 
 /***
- * @brief get the path to the system's temporary dir. The path receives ends with a `\`
+ * @brief get the path to the system's temporary dir. The path receives ends
+ * with a `\`
  * @NOTE the path is not gerenteed to exist
  * @NOTE it uses `GetTempPath`
  */

@@ -1,13 +1,14 @@
 #include <gtest/gtest.h>
+#include <windows.h>
+
 #include <libproj/defer.hpp>
 #include <libproj/directory.hpp>
-#include <libproj/temp_path.hpp>
-#include <libproj/file.hpp>
 #include <libproj/exceptions.hpp>
+#include <libproj/file.hpp>
+#include <libproj/temp_path.hpp>
 #include <stdexcept>
 #include <string>
 #include <utility>
-#include <windows.h>
 
 /***
  * @brief get the system temp directory path.
@@ -33,21 +34,15 @@ TEST(DirectoryExistsTest, DoesNotExists) {
 }
 
 class DirectoryFile : public ::testing::Test {
-protected:
-  void SetUp() override {
-    temp_path = get_temp_file();
-  }
+ protected:
+  void SetUp() override { temp_path = get_temp_file(); }
 
-  void TearDown() override {
-    delete_file(temp_path);
-  }
+  void TearDown() override { delete_file(temp_path); }
 
   std::wstring temp_path;
 };
 
-TEST_F(DirectoryFile, NotADiretroy) {
-  ASSERT_FALSE(is_directory(temp_path));
-}
+TEST_F(DirectoryFile, NotADiretroy) { ASSERT_FALSE(is_directory(temp_path)); }
 
 TEST(CreateDirectoryTests, InGoodPath) {
   auto temp_dir = get_temp_dir();

@@ -1,12 +1,11 @@
 #include <exception>
 #include <stdexcept>
 
-
 class AlreadyExistsError : public std::exception {
-public:
+ public:
   AlreadyExistsError() = default;
 };
 class PathNotFoundError : public std::exception {
-public:
+ public:
   PathNotFoundError() = default;
 };

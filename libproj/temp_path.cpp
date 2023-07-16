@@ -1,6 +1,7 @@
+#include <windows.h>
+
 #include <libproj/temp_path.hpp>
 #include <stdexcept>
-#include <windows.h>
 
 auto get_temp_dir() -> std::wstring {
   wchar_t path[MAX_PATH + 1];
