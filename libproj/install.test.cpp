@@ -9,7 +9,7 @@
 TEST(InstallTest, RecursiveDirectory) {
   auto temp_file1 = get_temp_file();
   auto temp_file2 = get_temp_file();
-  auto temp_path = get_temp_dir() + L"L\\abc";
+  auto temp_path = get_temp_dir() + L"L\\abc\\";
   std::vector<std::wstring> paths{temp_file1, temp_file2};
   install(paths, temp_path);
 
@@ -18,6 +18,7 @@ TEST(InstallTest, RecursiveDirectory) {
   ASSERT_TRUE(is_file(a));
   a = temp_path + L"2";
   ASSERT_TRUE(is_file(a));
+  std::cout << "file 3" << std::endl;
 }
 /*
 TEST(BTest, c) {
