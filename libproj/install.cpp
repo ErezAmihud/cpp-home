@@ -1,4 +1,3 @@
-#include <iostream>
 #include <libproj/defer.hpp>
 #include <libproj/directory.hpp>
 #include <libproj/exceptions.hpp>
@@ -52,7 +51,6 @@ auto install(const std::vector<std::wstring>& paths,
     while (std::wstring::npos != pos) {
       try {
         std::wstring path = destination_directory.substr(0, pos);
-        std::wcout << L"dir " << path << std::endl;
         create_directory(path);
         fail_stack.add(std::make_unique<DirectoryCleaner>(std::move(path)));
       } catch (AlreadyExistsError& e) {
