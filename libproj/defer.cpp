@@ -1,6 +1,7 @@
 #include <libproj/defer.hpp>
+#include <stddef.h>
 #include <memory>
-#include <string>
+#include <type_traits>
 
 FailStack::FailStack() { stack_ = std::vector<std::unique_ptr<Clearable>>(); }
 void FailStack::add(std::unique_ptr<Clearable> clearable) {

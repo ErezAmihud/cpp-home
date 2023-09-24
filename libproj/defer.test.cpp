@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
-
 #include <libproj/defer.hpp>
 #include <memory>
+#include <type_traits>
+#include <vector>
+#include <string>
 
 class BoolClearable : public Clearable {
  public:

@@ -1,9 +1,4 @@
-#include <gtest/gtest.h>
 
-#include <libproj/directory.hpp>
-#include <libproj/file.hpp>
-#include <libproj/install.hpp>
-#include <libproj/temp_path.hpp>
 
 // TODO make work multiple times - delete directory before run
 /*TEST(InstallTest, RecursiveDirectory) {

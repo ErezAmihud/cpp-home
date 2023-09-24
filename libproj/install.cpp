@@ -3,8 +3,9 @@
 #include <libproj/exceptions.hpp>
 #include <libproj/file.hpp>
 #include <libproj/install.hpp>
+#include <stddef.h>
 #include <memory>
-#include <utility>
+#include <type_traits>
 
 class DirectoryCleaner : public Clearable {
  public:

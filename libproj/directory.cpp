@@ -1,10 +1,8 @@
-#include <windows.h>
-
 #include <libproj/directory.hpp>
+#include <windows.h>
 #include <libproj/exceptions.hpp>
-#include <stdexcept>
 #include <string>
-#include <utility>
+#include <stdexcept>
 
 auto is_directory(const std::wstring &path) -> bool {
   DWORD ftyp = GetFileAttributesW(path.c_str());

@@ -1,4 +1,10 @@
 [
-    { include: [ "@<gtest/internal/.*>", private, "<gtest/gtest.h>", public ] }
-  , { include: [ "@<gtest/gtest-.*>",    private, "<gtest/gtest.h>", public ] }
+    { include: [ "@<gtest/internal/.*>", "private", "<gtest/gtest.h>", "public" ] }
+  , { include: [ "@<gtest/gtest-.*>",    "private", "<gtest/gtest.h>", "public" ] },
+  { include: [ "<xstring>",    "private", "<string>", "public" ] },
+{include : ["<errhandlingapi.h>", "private", "<windows.h>", public ]},
+{include : ["<minwindef.h>", "private", "<windows.h>", public ]},
+{include : ["<winerror.h>", "private", "<windows.h>", public ]},
+{include : ["<fileapi.h>", "private", "<windows.h>", public ]},
+{include : ["<fileapi.h>", "private", "<windows.h>", public ]},
 ]

@@ -1,10 +1,9 @@
 #include <gtest/gtest.h>
-
-#include <libproj/defer.hpp>
 #include <libproj/directory.hpp>
 #include <libproj/file.hpp>
 #include <libproj/temp_path.hpp>
 #include <stdexcept>
+#include <string>
 
 class TempFile : public ::testing::Test {
  protected:

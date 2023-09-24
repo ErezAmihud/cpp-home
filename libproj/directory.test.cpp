@@ -1,14 +1,11 @@
 #include <gtest/gtest.h>
 #include <windows.h>
-
-#include <libproj/defer.hpp>
 #include <libproj/directory.hpp>
 #include <libproj/exceptions.hpp>
 #include <libproj/file.hpp>
 #include <libproj/temp_path.hpp>
 #include <stdexcept>
 #include <string>
-#include <utility>
 
 /***
  * @brief get the system temp directory path.
